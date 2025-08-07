@@ -4,7 +4,7 @@ A modern real estate application built with React Native and Expo, designed to h
 
 ## Demo
 
-https://github.com/omidshz100/real-state-app/assets/video/demo.mov
+https://github.com/omidshz100/real-state-app/assets/video/demo.mp4
 
 ## Features
 
