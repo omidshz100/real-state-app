@@ -65,11 +65,36 @@ yarn start
 
 ## Usage
 
-After starting the development server, you can:
+After starting the development server, you have several options to run and interact with the app:
 
-- Run on iOS simulator: Press `i`
-- Run on Android emulator: Press `a`
-- Run on web browser: Press `w`
+### Development Server Commands
+
+```bash
+# Start the development server
+npm run dev
+```
+
+### Available Commands During Development
+
+- Press `i` to open in iOS simulator
+- Press `a` to open in Android emulator
+- Press `w` to open in web browser
+- Press `r` to reload the app
+- Press `m` to toggle the development menu
+- Press `j` to open debugger
+- Press `o` to open project in your editor
+- Press `?` to show all available commands
+- Press `Ctrl+C` to stop the development server
+
+### Access Options
+
+1. **Web Version**:
+   - Open http://localhost:8081 in your web browser
+
+2. **Mobile Version**:
+   - iOS: Use the iOS simulator (press `i`)
+   - Android: Use the Android emulator (press `a`)
+   - Physical Device: Scan the QR code with Expo Go app (Android) or Camera app (iOS)
 
 ## Contributing
 
