@@ -2,6 +2,10 @@
 
 A modern real estate application built with React Native and Expo, designed to help users discover, favorite, and explore property listings with an intuitive interface <mcreference link="https://medium.com/@kc_clintone/the-ultimate-guide-to-writing-a-great-readme-md-for-your-project-3d49c2023357" index="3">3</mcreference>.
 
+## Demo
+
+https://github.com/omidshz100/real-state-app/assets/video/demo.mov
+
 ## Features
 
 - Browse property listings
