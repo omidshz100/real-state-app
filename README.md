@@ -6,6 +6,11 @@ A modern real estate application built with React Native and Expo, designed to h
 
 https://youtube.com/shorts/N1hdfyrohaU
 
+## Demo
+▶️ Live demo on Expo Snack:
+https://snack.expo.dev/@omidshojaeian/my-awesome-app
+
+
 ## Features
 
 - Browse property listings
