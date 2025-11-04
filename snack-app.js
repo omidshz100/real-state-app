@@ -77,8 +77,15 @@ const BedIcon = () => <Text style={{fontSize: 14}}>🛏️</Text>;
 const BathIcon = () => <Text style={{fontSize: 14}}>🛁</Text>;
 const AreaIcon = () => <Text style={{fontSize: 14}}>📐</Text>;
 const HeartIcon = () => <Text style={{fontSize: 16}}>♡</Text>;
+const HeartFilledIcon = () => <Text style={{fontSize: 16}}>❤️</Text>;
 
-export default function App() {
+// Tab Icons
+const HomeIcon = ({ active }) => <Text style={{fontSize: 20}}>{active ? '🏠' : '🏡'}</Text>;
+const FavoritesIcon = ({ active }) => <Text style={{fontSize: 20}}>{active ? '❤️' : '🤍'}</Text>;
+const ProfileIcon = ({ active }) => <Text style={{fontSize: 20}}>{active ? '👤' : '👥'}</Text>;
+
+// Home Screen Component
+function HomeScreen() {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedFilter, setSelectedFilter] = useState('All');
 
@@ -194,7 +201,154 @@ export default function App() {
   );
 }
 
+// Favorites Screen Component
+function FavoritesScreen() {
+  const favoriteProperties = properties.slice(0, 3); // Show first 3 as favorites
+
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>My Favorites</Text>
+        <Text style={styles.greeting}>{favoriteProperties.length} saved properties</Text>
+      </View>
+      
+      <ScrollView style={styles.propertiesContainer}>
+        {favoriteProperties.map((property) => (
+          <TouchableOpacity
+            key={property.id}
+            style={styles.propertyCard}
+            onPress={() => alert(`Viewing ${property.title}`)}
+          >
+            <Image source={{ uri: property.image }} style={styles.propertyImage} />
+            
+            <View style={styles.propertyInfo}>
+              <View style={styles.propertyHeader}>
+                <Text style={styles.propertyPrice}>${property.price.toLocaleString()}</Text>
+                <TouchableOpacity style={styles.favoriteButton}>
+                  <HeartFilledIcon />
+                </TouchableOpacity>
+              </View>
+              
+              <Text style={styles.propertyTitle}>{property.title}</Text>
+              
+              <View style={styles.locationContainer}>
+                <LocationIcon />
+                <Text style={styles.locationText}>{property.location}</Text>
+              </View>
+            </View>
+          </TouchableOpacity>
+        ))}
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+// Profile Screen Component
+function ProfileScreen() {
+  return (
+    <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+        <Text style={styles.title}>Profile</Text>
+      </View>
+      
+      <ScrollView style={styles.propertiesContainer}>
+        <View style={styles.profileCard}>
+          <Image 
+            source={{ uri: 'https://images.pexels.com/photos/1587009/pexels-photo-1587009.jpeg?auto=compress&cs=tinysrgb&w=200&h=200&dpr=2' }} 
+            style={styles.profileImage} 
+          />
+          <Text style={styles.profileName}>John Doe</Text>
+          <Text style={styles.profileEmail}>john.doe@email.com</Text>
+        </View>
+
+        <View style={styles.menuContainer}>
+          <TouchableOpacity style={styles.menuItem}>
+            <Text style={styles.menuIcon}>⚙️</Text>
+            <Text style={styles.menuText}>Settings</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.menuItem}>
+            <Text style={styles.menuIcon}>📊</Text>
+            <Text style={styles.menuText}>My Statistics</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.menuItem}>
+            <Text style={styles.menuIcon}>💬</Text>
+            <Text style={styles.menuText}>Support</Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity style={styles.menuItem}>
+            <Text style={styles.menuIcon}>🚪</Text>
+            <Text style={styles.menuText}>Logout</Text>
+          </TouchableOpacity>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+// Main App Component with Tab Navigation
+export default function App() {
+  const [activeTab, setActiveTab] = useState('home');
+
+  const renderScreen = () => {
+    switch(activeTab) {
+      case 'home':
+        return <HomeScreen />;
+      case 'favorites':
+        return <FavoritesScreen />;
+      case 'profile':
+        return <ProfileScreen />;
+      default:
+        return <HomeScreen />;
+    }
+  };
+
+  return (
+    <View style={styles.appContainer}>
+      {renderScreen()}
+      
+      {/* Tab Bar */}
+      <View style={styles.tabBar}>
+        <TouchableOpacity 
+          style={[styles.tabItem, activeTab === 'home' && styles.activeTab]}
+          onPress={() => setActiveTab('home')}
+        >
+          <HomeIcon active={activeTab === 'home'} />
+          <Text style={[styles.tabLabel, activeTab === 'home' && styles.activeTabLabel]}>
+            Home
+          </Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={[styles.tabItem, activeTab === 'favorites' && styles.activeTab]}
+          onPress={() => setActiveTab('favorites')}
+        >
+          <FavoritesIcon active={activeTab === 'favorites'} />
+          <Text style={[styles.tabLabel, activeTab === 'favorites' && styles.activeTabLabel]}>
+            Favorites
+          </Text>
+        </TouchableOpacity>
+        
+        <TouchableOpacity 
+          style={[styles.tabItem, activeTab === 'profile' && styles.activeTab]}
+          onPress={() => setActiveTab('profile')}
+        >
+          <ProfileIcon active={activeTab === 'profile'} />
+          <Text style={[styles.tabLabel, activeTab === 'profile' && styles.activeTabLabel]}>
+            Profile
+          </Text>
+        </TouchableOpacity>
+      </View>
+    </View>
+  );
+}
+
 const styles = StyleSheet.create({
+  appContainer: {
+    flex: 1,
+    backgroundColor: '#F9FAFB',
+  },
   container: {
     flex: 1,
     backgroundColor: '#F9FAFB',
@@ -274,6 +428,7 @@ const styles = StyleSheet.create({
   },
   propertiesContainer: {
     paddingHorizontal: 20,
+    paddingBottom: 100, // Add padding for tab bar
   },
   sectionTitle: {
     fontSize: 18,
@@ -343,5 +498,98 @@ const styles = StyleSheet.create({
     fontSize: 14,
     color: '#6B7280',
     fontWeight: '500',
+  },
+  // Profile Screen Styles
+  profileCard: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    padding: 24,
+    alignItems: 'center',
+    marginBottom: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  profileImage: {
+    width: 80,
+    height: 80,
+    borderRadius: 40,
+    marginBottom: 16,
+    backgroundColor: '#F3F4F6',
+  },
+  profileName: {
+    fontSize: 20,
+    fontWeight: '700',
+    color: '#111827',
+    marginBottom: 4,
+  },
+  profileEmail: {
+    fontSize: 14,
+    color: '#6B7280',
+  },
+  menuContainer: {
+    backgroundColor: '#FFFFFF',
+    borderRadius: 16,
+    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.08,
+    shadowRadius: 8,
+    elevation: 4,
+  },
+  menuItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    padding: 16,
+    borderBottomWidth: 1,
+    borderBottomColor: '#F3F4F6',
+  },
+  menuIcon: {
+    fontSize: 20,
+    marginRight: 12,
+  },
+  menuText: {
+    fontSize: 16,
+    color: '#111827',
+    fontWeight: '500',
+  },
+  // Tab Bar Styles
+  tabBar: {
+    position: 'absolute',
+    bottom: 0,
+    left: 0,
+    right: 0,
+    backgroundColor: '#FFFFFF',
+    flexDirection: 'row',
+    paddingTop: 12,
+    paddingBottom: 34, // Extra padding for safe area
+    paddingHorizontal: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#E5E7EB',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: -2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 10,
+  },
+  tabItem: {
+    flex: 1,
+    alignItems: 'center',
+    paddingVertical: 8,
+  },
+  activeTab: {
+    backgroundColor: 'transparent',
+  },
+  tabLabel: {
+    fontSize: 12,
+    color: '#6B7280',
+    marginTop: 4,
+    fontWeight: '500',
+  },
+  activeTabLabel: {
+    color: '#2563EB',
+    fontWeight: '600',
   },
 });
