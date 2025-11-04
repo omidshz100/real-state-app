@@ -9,10 +9,11 @@ A modern, feature-rich real estate mobile application built with React Native an
 ## 🚀 Live Demo
 
 ### 📱 **Try it Instantly (No Installation Required!)**
-**[🔗 Live Expo Snack Demo](https://snack.expo.dev/@yourusername/real-estate-mobile-app)**
+**[🔗 Live Expo Snack Demo](https://snack.expo.dev/@yourusername/real-estate-app-portfolio-demo)**
 - ✅ Works on any device (iOS/Android/Web)
 - ✅ Scan QR code with Expo Go app
 - ✅ Or run in web browser instantly
+- ✅ Complete tab navigation experience
 
 ### 📱 Try it on your phone:
 **Scan the QR code with Expo Go app (Android) or Camera app (iOS)**
